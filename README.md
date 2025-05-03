@@ -1,7 +1,5 @@
 # Event-Driven Order Notification System
 
-## Architecture
-![Architecture Diagram](architecture.png)
 
 ## Setup Instructions
 
@@ -27,7 +25,7 @@
 
 3. Test the system:
 
-    1. AWS Console:
+    a) AWS Console:
     - go to your SNS topic
     - click public message
     - add a sample message
@@ -43,13 +41,15 @@
     "status": "pending",
     "timestamp": "2025-05-06T14:30:00Z"
     }
+    ```
 
-    2. CLI:
+   b) CLI:
 
     ```bash
     aws sns publish \
     --topic-arn $(aws cloudformation describe-stacks --stack-name OrderNotificationSystem --query "Stacks[0].Outputs[?OutputKey=='OrderTopicARN'].OutputValue" --output text) \
     --message '{"orderId":"O1234","userId":"U123","itemName":"Laptop","quantity":1,"status":"new","timestamp":"2025-05-03T12:00:00Z"}'
+    ```
 
 ## Components
 DynamoDB: Stores order data
@@ -65,12 +65,15 @@ DLQ: Handles failed messages
 
 ## Architecture diagram
 
-1. Architecture diagram
+### 1. Architecture diagram
+
 ![alt text](screenshots/architecture_diagram.png)
 
-2. Sequence Diagram
+### 2. Sequence Diagram
+
 ![alt text](screenshots/sequence_diagram.png)
 
-3. Retry scenario
-![alt text](dscreenshots/retry_scenario.png)
+### 3. Retry scenario
+
+![alt text](screenshots/retry_scenario.png)
 
